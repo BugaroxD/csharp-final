@@ -1,0 +1,5 @@
+C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.csproj.AssemblyReference.cache
+C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.AssemblyInfoInputs.cache
+C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.AssemblyInfo.cs
+C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.csproj.CoreCompileInputs.cache
