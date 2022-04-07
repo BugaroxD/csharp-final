@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
-using Views;
-using Controllers;
+//using Views;
+//using Controllers;
 
 namespace EncryptMe
 {
