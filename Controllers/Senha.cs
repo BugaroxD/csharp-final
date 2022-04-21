@@ -58,7 +58,7 @@ namespace Controllers
             string Procedimento
         )
         {
-            Senha senha = GetSenha(Id);
+            Senha senha = GetSenhas(Id);
 
             if (!String.IsNullOrEmpty(Nome))
             {
