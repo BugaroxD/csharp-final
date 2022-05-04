@@ -69,7 +69,7 @@ namespace Controller
 
             if (categoria == null)
             {
-                throw new Exception("Dentista não encontrado");
+                throw new Exception("Categoria não encontrada");
             }
 
             return categoria;
