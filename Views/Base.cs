@@ -11,11 +11,11 @@ using Models;
 namespace Views
 {
 
-  public abstract class FormBase : Form
+  public abstract class Base : Form
   {
     public List<Field> fields;
 
-    public FormBase()
+    public Base()
     {
       this.fields = new List<Field>();
     }

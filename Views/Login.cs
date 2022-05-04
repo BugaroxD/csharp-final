@@ -7,14 +7,14 @@ using Models;
 
 namespace Views
 {
-  public class FormLogin : FormBase
+  public class Login : Base
   {
     public List<Field> fields;
-    Button buttonConfirmar;
-    Button buttonFechar;
-    Button buttonCadastrar;
+    Button bttnConfirmar;
+    Button bttnFechar;
+    Button bttnCadastrar;
 
-    public FormLogin() : base()
+    public Login() : base()
     {
       this.ClientSize = new System.Drawing.Size(280, 280);
       this.Text = "Login";
@@ -22,32 +22,32 @@ namespace Views
       base.fields.Add(new Field("login", 20, 20, "Login"));
       base.fields.Add(new Field("password", 20, 90, "Senha", 240, 15, '*'));
 
-      buttonConfirmar = new Button();
-      buttonConfirmar.Text = "Confirmar";
-      buttonConfirmar.Size = new Size(80, 25);
-      buttonConfirmar.Location = new Point(100, 170);
-      buttonConfirmar.Click += new EventHandler(this.buttonConfirmarClick);
+      bttnConfirmar = new Button();
+      bttnConfirmar.Text = "Confirmar";
+      bttnConfirmar.Size = new Size(80, 25);
+      bttnConfirmar.Location = new Point(100, 170);
+      bttnConfirmar.Click += new EventHandler(this.buttonConfirmarClick);
 
-      buttonCadastrar = new Button();
-      buttonCadastrar.Text = "Cadastrar";
-      buttonCadastrar.Size = new Size(80, 25);
-      buttonCadastrar.Location = new Point(100, 200);
-      buttonCadastrar.Click += new EventHandler(this.buttonCadastrarClick);
+      bttnCadastrar = new Button();
+      bttnCadastrar.Text = "Cadastrar";
+      bttnCadastrar.Size = new Size(80, 25);
+      bttnCadastrar.Location = new Point(100, 200);
+      bttnCadastrar.Click += new EventHandler(this.buttonCadastrarClick);
 
-      buttonFechar = new Button();
-      buttonFechar.Text = "Fechar";
-      buttonFechar.Size = new Size(80, 25);
-      buttonFechar.Location = new Point(100, 230);
-      buttonFechar.Click += new EventHandler(this.buttonFecharClick);
+      bttnFechar = new Button();
+      bttnFechar.Text = "Fechar";
+      bttnFechar.Size = new Size(80, 25);
+      bttnFechar.Location = new Point(100, 230);
+      bttnFechar.Click += new EventHandler(this.buttonFecharClick);
 
       foreach (Field field in base.fields)
       {
         this.Controls.Add(field.label);
         this.Controls.Add(field.textBox);
       }
-      this.Controls.Add(buttonConfirmar);
-      this.Controls.Add(buttonCadastrar);
-      this.Controls.Add(buttonFechar);
+      this.Controls.Add(bttnConfirmar);
+      this.Controls.Add(bttnCadastrar);
+      this.Controls.Add(bttnFechar);
     }
 
     private void buttonConfirmarClick(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace Views
       try
       {
         Usuario.Auth(fieldLogin.textBox.Text, fieldSenha.textBox.Text);
-        (new FormMenu()).Show();
+        (new Menu()).Show();
       }
       catch (Exception err)
       {
