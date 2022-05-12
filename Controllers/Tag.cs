@@ -28,7 +28,7 @@ namespace Controllers
 
       if (!String.IsNullOrEmpty(Descricao))
       {
-        Descricao = Descricao;
+        throw new Exception("Descrição inválida.");
       }
 
       return tag;

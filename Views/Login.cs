@@ -7,73 +7,64 @@ using Models;
 
 namespace Views
 {
-  public class FormLogin : FormBase
-  {
-    public List<Field> fields;
-    Button buttonConfirmar;
-    Button buttonFechar;
-    Button buttonCadastrar;
-
-    public FormLogin() : base()
+    public class Login : Form
     {
-      this.ClientSize = new System.Drawing.Size(280, 280);
-      this.Text = "Login";
+        private System.ComponentModel.IContainer components = null;
+        Label lblUser;
+        Label lblPassword;
+        TextBox txtUser;
+        TextBox txtPassword;
 
-      base.fields.Add(new Field("login", 20, 20, "Login"));
-      base.fields.Add(new Field("password", 20, 90, "Senha", 240, 15, '*'));
+        Button bttnLogin;
+        Button bttnExit;
+        public Login()
+        {
+            this.lblUser = new Fields.FieldOnLabel("Usuário", 120, 30);
 
-      buttonConfirmar = new Button();
-      buttonConfirmar.Text = "Confirmar";
-      buttonConfirmar.Size = new Size(80, 25);
-      buttonConfirmar.Location = new Point(100, 170);
-      buttonConfirmar.Click += new EventHandler(this.buttonConfirmarClick);
+            this.txtUser = new Fields.FieldOnTextBox(50, 60, 200, 20);
 
-      buttonCadastrar = new Button();
-      buttonCadastrar.Text = "Cadastrar";
-      buttonCadastrar.Size = new Size(80, 25);
-      buttonCadastrar.Location = new Point(100, 200);
-      buttonCadastrar.Click += new EventHandler(this.buttonCadastrarClick);
+            this.lblPassword = new Fields.FieldOnLabel("Senha", 120, 100);
 
-      buttonFechar = new Button();
-      buttonFechar.Text = "Fechar";
-      buttonFechar.Size = new Size(80, 25);
-      buttonFechar.Location = new Point(100, 230);
-      buttonFechar.Click += new EventHandler(this.buttonFecharClick);
+            this.txtPassword = new Fields.FieldOnTextBox(50, 130, 200, 20);
+            this.txtPassword.PasswordChar = '*';
 
-      foreach (Field field in base.fields)
-      {
-        this.Controls.Add(field.label);
-        this.Controls.Add(field.textBox);
-      }
-      this.Controls.Add(buttonConfirmar);
-      this.Controls.Add(buttonCadastrar);
-      this.Controls.Add(buttonFechar);
+            bttnLogin = new Fields.FieldOnButton("Conectar", 50, 220, 100, 30);
+            bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
+
+            bttnExit = new Fields.FieldOnButton("Sair", 150, 220, 100, 30);
+            bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
+
+            this.Controls.Add(this.lblUser);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.bttnLogin);
+            this.Controls.Add(this.bttnExit);
+
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.Text = "Login";
+        }
+
+        public void ClickOnLoginBttn(object sender, EventArgs e)
+        {
+            try
+            {
+                Menu Menus = new Menu(this);
+                Menus.Show();
+                this.Hide();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Usuário ou senha inválido", "Erro");
+            }
+        }
+        public void ClickOnExitBttn(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 
-    private void buttonConfirmarClick(object sender, EventArgs e)
-    {
-      Field fieldLogin = base.fields.Find((Field field) => field.id == "login");
-      Field fieldSenha = base.fields.Find((Field field) => field.id == "password");
-
-      try
-      {
-        Usuario.Auth(fieldLogin.textBox.Text, fieldSenha.textBox.Text);
-        (new FormMenu()).Show();
-      }
-      catch (Exception err)
-      {
-        MessageBox.Show(err.Message);
-      }
-    }
-
-    private void buttonFecharClick(object sender, EventArgs e)
-    {
-      this.Close();
-    }
-
-    private void buttonCadastrarClick(object sender, EventArgs e)
-    {
-      this.Close();
-    }
-  }
 }
