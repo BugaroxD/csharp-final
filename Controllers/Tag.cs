@@ -34,12 +34,12 @@ namespace Controllers
       return tag;
     }
 
-    public static Tag ExcluirTag(
+    public static Tag RemoverTag(
         int Id
     )
     {
       Tag tag = GetTag(Id);
-      Tag.ExcluirTag(tag);
+      Tag.RemoverTag(tag);
       return tag;
     }
 

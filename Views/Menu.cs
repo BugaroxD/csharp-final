@@ -4,11 +4,11 @@ using lib;
 using Models;
 using System.Drawing;
 
-namespace Telas
+namespace Views
 {
-    public class Menu : Form
+    public class MenuForm : Form
     {
-        Form parent;
+        
         private System.ComponentModel.IContainer components = null;
 
         Label lblTitle;
@@ -19,29 +19,24 @@ namespace Telas
         Button bttnTags;
         Button bttnPassword;
 
-        public Menu(Form parent)
+        public MenuForm()
         {
-            this.parent = parent;
 
-            this.lblTitle = new Fields.TamOnLabelField($"Bem vindo(a)!", 120, 15, 150, 30);
+            this.lblTitle = new Generic.TamOnLabelField($"Bem vindo(a)!", 120, 15, 150, 30);
 
-            this.bttnUser = new Fields.FieldOnButton("Usuário", 100, 170, 100, 30);
+            this.bttnUser = new Generic.FieldOnButton("Usuário", 100, 170, 100, 30);
             bttnUser.Click += new EventHandler(this.ClickOnUserBttn);
 
-            this.bttnPassword = new Fields.FieldOnButton("Senhas", 100, 130, 100, 30);
-            bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttns);
+            this.bttnPassword = new Generic.FieldOnButton("Senhas", 100, 130, 100, 30);
+            bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
 
-            this.bttnCategory = new Fields.FieldOnButton("Categoria", 100, 50, 100, 30);
+            this.bttnCategory = new Generic.FieldOnButton("Categoria", 100, 50, 100, 30);
             bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
 
-            this.bttnTags = new Fields.FieldOnButton("Tags", 100, 90, 100, 30);
+            this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
             bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
 
-
-
-
-
-            this.bttnExit = new Fields.FieldOnButton("Sair", 100, 210, 100, 30);
+            this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
             this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
 
             this.Controls.Add(this.lblTitle);
@@ -53,13 +48,18 @@ namespace Telas
 
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(350, 350);
             this.Text = "Menu";
         }
 
         public void ClickOnExitBttn(object sender, EventArgs e)
         {
-            this.parent.Close();
+            Application.Exit();
+        }
+        public void ClickOnUserBttn(object sender, EventArgs e)
+        {
+            UsuarioView UsuarioViews = new UsuarioView();
+            UsuarioViews.ShowDialog();
         }
         /*
         public void ClickOnCategoryBttn(object sender, EventArgs e)
@@ -68,19 +68,15 @@ namespace Telas
             CategoriaViews.ShowDialog();
         }
 
-        public void btnSenhaClick(object sender, EventArgs e)
+        public void ClickOnPasswordBttn(object sender, EventArgs e)
         {
             SenhaView SenhaViews = new SenhaView();
             SenhaViews.ShowDialog();
         }
 
-        public void btnUsuarioClick(object sender, EventArgs e)
-        {
-            UsuarioView UsuarioViews = new UsuarioView();
-            UsuarioViews.ShowDialog();
-        }
+        
 
-        public void btnTagClick(object sender, EventArgs e)
+        public void ClickOnTagBttn(object sender, EventArgs e)
         {
             TagView TagViews = new TagView(this);
             TagViews.ShowDialog();

@@ -7,41 +7,33 @@ using Models;
 
 namespace Views
 {
-    public class Login : Form
+    public class LoginForm : GenericBase
     {
-        private System.ComponentModel.IContainer components = null;
-        Label lblUser;
-        Label lblPassword;
-        TextBox txtUser;
-        TextBox txtPassword;
-
+        public List<GenericField> generics;
         Button bttnLogin;
         Button bttnExit;
-        public Login()
+        Button bttnRegister;
+        public LoginForm(): base()
         {
-            this.lblUser = new Fields.FieldOnLabel("Usuário", 120, 30);
+            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.Text = "Usuário";
 
-            this.txtUser = new Fields.FieldOnTextBox(50, 60, 200, 20);
+            base.generics.Add(new GenericField("user", 30, 30, "Usuário"));
+            base.generics.Add(new GenericField("password", 20, 90, "Senha", 240, 15, '*'));
 
-            this.lblPassword = new Fields.FieldOnLabel("Senha", 120, 100);
-
-            this.txtPassword = new Fields.FieldOnTextBox(50, 130, 200, 20);
-            this.txtPassword.PasswordChar = '*';
-
-            bttnLogin = new Fields.FieldOnButton("Conectar", 50, 220, 100, 30);
+            bttnLogin = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);
             bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
 
-            bttnExit = new Fields.FieldOnButton("Sair", 150, 220, 100, 30);
+            bttnRegister = new Generic.FieldOnButton("Cadastrar", 50, 220, 100, 30);
+            bttnRegister.Click += new EventHandler(this.ClickOnRegisterBttn);
+
+            bttnExit = new Generic.FieldOnButton("Sair", 150, 220, 100, 30);
             bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
 
-            this.Controls.Add(this.lblUser);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUser);
+          
             this.Controls.Add(this.bttnLogin);
             this.Controls.Add(this.bttnExit);
 
-            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 300);
             this.Text = "Login";
@@ -49,16 +41,22 @@ namespace Views
 
         public void ClickOnLoginBttn(object sender, EventArgs e)
         {
+            GenericField fieldLogin = base.generics.Find((GenericField field) => field.id == "Usuário");
+            GenericField fieldSenha = base.generics.Find((GenericField field) => field.id == "Senha");
+
             try
             {
-                Menu Menus = new Menu(this);
-                Menus.Show();
-                this.Hide();
+                Usuario.Auth(fieldLogin.textBox.Text, fieldSenha.textBox.Text);
+                (new MenuForm()).Show();
             }
             catch (Exception err)
             {
-                MessageBox.Show("Usuário ou senha inválido", "Erro");
+                MessageBox.Show(err.Message);
             }
+        }
+          private void ClickOnRegisterBttn(object sender, EventArgs e)
+        {
+            new UserForm(Function.Create).Show();
         }
         public void ClickOnExitBttn(object sender, EventArgs e)
         {

@@ -4,9 +4,44 @@ using System.Drawing;
 
 namespace lib
 {
-    public class Fields : Form
+    public class GenericField 
     {
-        public Fields()
+        public string id;
+        public TextBox textBox;
+        public Label label;
+        
+        public GenericField(
+            string id,
+            int pointA,
+            int pointB,
+            string label,
+            int sizeA = 280,
+            int sizeB = 55,
+            char characterPass = ' ',
+            string valueDefault = ""
+            
+        )
+        {
+            this.id = id;
+
+            this.textBox = new TextBox();
+            this.textBox.Location = new Point(pointA, pointB + 30);
+            this.textBox.Size = new Size(sizeA, sizeB);
+            this.textBox.Text = valueDefault;
+
+            this.label = new Label();
+            this.label.Text = label;
+            this.label.Location = new Point(pointA, pointB);
+
+            if (!Char.IsWhiteSpace(characterPass))
+            {
+                this.textBox.PasswordChar = characterPass;
+            }
+        }
+    }
+    public class Generic : Form
+    {
+        public Generic()
         {}
 
         public class TamOnLabelField : Label
@@ -65,14 +100,18 @@ namespace lib
             {
                 this.Close();
             }
-
-            public class ConfirmMessage
-            {
-                public static DialogResult Show(
-                    string Message = "Mais um click e sua ação sera confirmada, tem certeza de que deseja isto?"
-                    )
+        }
+    }
+    public class ConfirmMessage
+        {
+            public static DialogResult Show
+                (
+                    string Message = 
+                        "Mais um click e sua ação sera confirmada, tem certeza de que deseja isto?"
+                )
                 {
-                    return MessageBox.Show(
+                    return MessageBox.Show
+                    (
                         "Confirmar",
                         Message,
                         MessageBoxButtons.YesNo,
@@ -80,12 +119,13 @@ namespace lib
                     );
                 }
             }
-
-            public class CancelMessage
-            {
-                public static DialogResult Show(
-                    string Mensagem = "Mais um click e sua ação sera cancelada, tem certeza de que deseja isto??"
-                    )
+    public class CancelMessage
+        {
+            public static DialogResult Show
+                (
+                    string Mensagem = 
+                        "Mais um click e sua ação sera cancelada, tem certeza de que deseja isto??"
+                )
                 {
                     return MessageBox.Show(
                         "Cancelar",
@@ -96,9 +136,12 @@ namespace lib
                 }
             }
 
-            public class ErrorMessage
-            {
-                public static DialogResult Show(string Mensagem = "Error... Contate o técnico responsável")
+    public class ErrorMessage
+        {
+            public static DialogResult Show
+                (
+                    string Mensagem = "Error... Contate o técnico responsável"
+                )
                 {
                     return MessageBox.Show(
                         "Error",
@@ -109,5 +152,6 @@ namespace lib
                 }
 
             }
-        }
-    }
+    public enum Function
+            { Create, Update }
+}
