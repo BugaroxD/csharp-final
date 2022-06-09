@@ -104,6 +104,7 @@ namespace Views
     public class PassForm : GenericBase
     {
         public static Senha senha = null;
+        public static SenhaTag senhaTag;
         public static Function option;
         public static int uid;
         public List<GenericField> generics;
@@ -203,7 +204,7 @@ namespace Views
                 this.comboCategory.Text = senha.Categoria.ToString();
                 this.txtProcedure.Text = senha.Procedimento;
 
-                IEnumerable<SenhaTag> senhaTags = SenhaTagController.GetById(senha.Id);
+                IEnumerable<SenhaTag> senhaTags = SenhaTagController.GetSenhaTag(senhaTag.Id);
                 foreach (SenhaTag item in senhaTags)
                 {
                     this.checkBoxTags.SelectedItems.Add(item.Tag.Descricao);
@@ -223,10 +224,10 @@ namespace Views
         private void bttnConfirmClick(object sender, EventArgs e)
         {
             
-            Field fieldName = base.fields.Find((Field field) => field.id == "name");
-            Field fieldUrl = base.fields.Find((Field field) => field.id == "url");
-            Field fieldUsuario = base.fields.Find((Field field) => field.id == "user");
-            Field fieldSenhaEncrypt = base.fields.Find((Field field) => field.id == "pass");
+            GenericField fieldName = base.generics.Find((GenericField field) => field.id == "name");
+            GenericField fieldUrl = base.generics.Find((GenericField field) => field.id == "url");
+            GenericField fieldUsuario = base.generics.Find((GenericField field) => field.id == "user");
+            GenericField fieldSenhaEncrypt = base.generics.Find((GenericField field) => field.id == "pass");
             var categoria = comboCategory.SelectedItem.ToString();
             var inicioId = categoria.IndexOf("- ");
             var categoriaId = categoria.Substring(0, inicioId - 1);
@@ -234,7 +235,7 @@ namespace Views
             {
                 if (option == Function.Create)
                 {
-                    SenhaController.IncluirSenha(
+                    SenhaController.InserirSenha(
                         fieldName.textBox.Text,
                         Convert.ToInt32(categoriaId),
                         fieldUrl.textBox.Text,
@@ -242,7 +243,7 @@ namespace Views
                         fieldSenhaEncrypt.textBox.Text,
                         txtProcedure.Text
                     );
-                    SenhaTagController.IncluirSenhaTag(
+                    SenhaTagController.InserirSenhaTag(
                         99,
                         Convert.ToInt32(checkBoxTags.SelectedItems[0])
                     );
