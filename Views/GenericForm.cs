@@ -12,7 +12,7 @@ namespace Views
     public class UserForm : GenericBase
     {
         public static Function option;
-        public static int uid;
+        public static int userId;
         public List<GenericField> generics;
         Button bttnConfirm;
         Button bttnCancel;
@@ -22,7 +22,7 @@ namespace Views
         ) : base()
         {
             option = function;
-            uid = id;
+            userId = id;
 
             Usuario usuario = null;
             if (id > 0)
@@ -43,13 +43,13 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 220);
-            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.BttnConfirmClick);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 255);
-            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.BttnCancelClick);
 
             foreach (GenericField generics in base.generics)
             {
@@ -61,18 +61,18 @@ namespace Views
             this.Controls.Add(bttnCancel);
         }
 
-        private void bttnConfirmClick(object sender, EventArgs e)
+        private void BttnConfirmClick(object sender, EventArgs e)
         {
-            GenericField fieldName = base.generics.Find((GenericField field) => field.id == "name");
-            GenericField fieldEmail = base.generics.Find((GenericField field) => field.id == "email");
-            GenericField genericsenha = base.generics.Find((GenericField field) => field.id == "senha");
+            GenericField genericName = base.generics.Find((GenericField generic) => generic.id == "name");
+            GenericField genericEmail = base.generics.Find((GenericField generic) => generic.id == "email");
+            GenericField genericsenha = base.generics.Find((GenericField generic) => generic.id == "senha");
             try
             {
                 if (option == Function.Create)
                 {
                     UsuarioController.InserirUsuario(
-                        fieldName.textBox.Text,
-                        fieldEmail.textBox.Text,
+                        genericName.textBox.Text,
+                        genericEmail.textBox.Text,
                         genericsenha.textBox.Text
                     );
                     MessageBox.Show("Usuário criado com sucesso");
@@ -80,9 +80,9 @@ namespace Views
                 else if (option == Function.Update)
                 {
                    UsuarioController.AlterarUsuario(
-                        uid,
-                        fieldName.textBox.Text,
-                        fieldEmail.textBox.Text,
+                        userId,
+                        genericName.textBox.Text,
+                        genericEmail.textBox.Text,
                         genericsenha.textBox.Text
                     );
                     MessageBox.Show("Usuário alterado com sucesso");
@@ -94,7 +94,7 @@ namespace Views
             }
         }
 
-        private void bttnCancelClick(object sender, EventArgs e)
+        private void BttnCancelClick(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -106,7 +106,8 @@ namespace Views
         public static Senha senha = null;
         public static SenhaTag senhaTag;
         public static Function option;
-        public static int uid;
+        public static int categoryId;
+        public static int passId;
         public List<GenericField> generics;
         Label lblCategory;
         Label lblProcedure;
@@ -122,7 +123,7 @@ namespace Views
         ) : base()
         {
             option = function;
-            uid = id;
+            passId = id;
 
             if (id > 0)
             {
@@ -174,9 +175,19 @@ namespace Views
             this.checkBoxTags = new CheckedListBox();
             this.checkBoxTags.Location = new Point(10, 550);
             this.checkBoxTags.Size = new Size(280, 100);
+            int order = 0;
             foreach (Tag item in TagController.VisualizarTag())
             {
-                this.checkBoxTags.Items.Add(item.Descricao);
+                this.checkBoxTags.Items.Add(item.ToString());
+                if (senha != null)
+                {
+                    SenhaTag theTagSenha =  TagSenhaController.GetBySenhaTag(senha.Id, item.Id);
+                    if (theTagSenha != null)
+                    {
+                        this.checkBoxTags.SetItemChecked(order, true);
+                    }
+                }
+                order++;
             }
             this.checkBoxTags.SelectionMode = SelectionMode.One;
             this.checkBoxTags.CheckOnClick = true;            
@@ -185,13 +196,13 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 680);
-            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.BttnConfirmClick);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 710);
-            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.BttnCancelClick);
 
             foreach (GenericField field in base.generics)
             {
@@ -203,47 +214,48 @@ namespace Views
             {
                 this.comboCategory.Text = senha.Categoria.ToString();
                 this.txtProcedure.Text = senha.Procedimento;
-
-                IEnumerable<SenhaTag> senhaTags = SenhaTagController.GetSenhaTag(senhaTag.Id);
-                foreach (SenhaTag item in senhaTags)
-                {
-                    this.checkBoxTags.SelectedItems.Add(item.Tag.Descricao);
-                }
             }
 
-            this.Controls.Add(lblCategory);
-            this.Controls.Add(comboCategory);
-            this.Controls.Add(lblProcedure);
-            this.Controls.Add(txtProcedure);
             this.Controls.Add(lblTags);
             this.Controls.Add(checkBoxTags);
+            this.Controls.Add(lblProcedure);
+            this.Controls.Add(txtProcedure);
+            this.Controls.Add(lblCategory);
+            this.Controls.Add(comboCategory);
             this.Controls.Add(bttnConfirm);
             this.Controls.Add(bttnCancel);
         }
 
-        private void bttnConfirmClick(object sender, EventArgs e)
+        private void BttnConfirmClick(object sender, EventArgs e)
         {
             
-            GenericField fieldName = base.generics.Find((GenericField field) => field.id == "name");
-            GenericField fieldUrl = base.generics.Find((GenericField field) => field.id == "url");
-            GenericField fieldUsuario = base.generics.Find((GenericField field) => field.id == "user");
-            GenericField fieldSenhaEncrypt = base.generics.Find((GenericField field) => field.id == "pass");
-            var categoria = comboCategory.SelectedItem.ToString();
-            var inicioId = categoria.IndexOf("- ");
-            var categoriaId = categoria.Substring(0, inicioId - 1);
+            GenericField genericName = base.generics.Find((GenericField field) => field.id == "name");
+            GenericField genericUrl = base.generics.Find((GenericField field) => field.id == "url");
+            GenericField genericUsuario = base.generics.Find((GenericField field) => field.id == "user");
+            GenericField genericSenhaEncrypt = base.generics.Find((GenericField field) => field.id == "pass");
+            try
+            {
+            var category = comboCategory.SelectedItem.ToString();
+            var startId = category.IndexOf("- ");
+            var categoryId = category.Substring(0, startId - 1);
+            }
+            catch (Exception)
+            {
+               ErrorMessage.Show("Campo categoria não pode ser vazio, favor inserir informação referente!");
+            }
             try
             {
                 if (option == Function.Create)
                 {
                     SenhaController.InserirSenha(
-                        fieldName.textBox.Text,
-                        Convert.ToInt32(categoriaId),
-                        fieldUrl.textBox.Text,
-                        fieldUsuario.textBox.Text,
-                        fieldSenhaEncrypt.textBox.Text,
+                        genericName.textBox.Text,
+                        Convert.ToInt32(categoryId),
+                        genericUrl.textBox.Text,
+                        genericUsuario.textBox.Text,
+                        genericSenhaEncrypt.textBox.Text,
                         txtProcedure.Text
                     );
-                    SenhaTagController.InserirSenhaTag(
+                    TagSenhaController.InserirSenhaTag(
                         99,
                         Convert.ToInt32(checkBoxTags.SelectedItems[0])
                     );
@@ -253,15 +265,15 @@ namespace Views
                 else if (option == Function.Update)
                 {
                    SenhaController.AlterarSenha(
-                        uid,
-                        fieldName.textBox.Text,
-                        Convert.ToInt32(categoriaId),
-                        fieldUrl.textBox.Text,
-                        fieldUsuario.textBox.Text,
-                        fieldSenhaEncrypt.textBox.Text,
+                        passId,
+                        genericName.textBox.Text,
+                        Convert.ToInt32(categoryId),
+                        genericUrl.textBox.Text,
+                        genericUsuario.textBox.Text,
+                        genericSenhaEncrypt.textBox.Text,
                         txtProcedure.Text
                     );
-                    MessageBox.Show("Categoria alterada com sucesso");
+                    MessageBox.Show("Success","Senha alterada com sucesso!", MessageBoxButtons.OK);
                     this.Close();
                 }
             }
@@ -271,7 +283,7 @@ namespace Views
             }
         }
 
-        private void bttnCancelClick(object sender, EventArgs e)
+        private void BttnCancelClick(object sender, EventArgs e)
         {
             this.Close();
         }

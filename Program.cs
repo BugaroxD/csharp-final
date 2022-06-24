@@ -13,7 +13,7 @@ namespace EncryptMe
       try
       {
         Application.EnableVisualStyles();
-        Application.Run(new FormLogin());
+        Application.Run(new LoginForm());
       }
       catch (Exception err)
       {

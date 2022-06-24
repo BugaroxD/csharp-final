@@ -28,13 +28,13 @@ namespace Views
             bttnUser.Click += new EventHandler(this.ClickOnUserBttn);
 
             this.bttnPassword = new Generic.FieldOnButton("Senhas", 100, 130, 100, 30);
-            bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
+            //bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
 
             this.bttnCategory = new Generic.FieldOnButton("Categoria", 100, 50, 100, 30);
-            bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
+            //bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
 
             this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
-            bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
+            //bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
 
             this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
             this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);

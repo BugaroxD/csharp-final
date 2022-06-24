@@ -5,7 +5,7 @@ using Models;
 
 namespace Controllers
 {
-    public class SenhaTagController
+    public class TagSenhaController
     {
         public static SenhaTag InserirSenhaTag(
             int SenhaId,
@@ -23,7 +23,14 @@ namespace Controllers
             SenhaTag.RemoverSenhaTag(SenhaTag);
             return SenhaTag;
         }
-
+         public static IEnumerable<SenhaTag> GetBySenhaId(int Id)
+        {
+            return SenhaTag.GetBySenhaId(Id);
+        }
+        public static SenhaTag GetBySenhaTag(int SenhaId, int TagId)
+        {
+            return SenhaTag.GetSenhaTag(SenhaId, TagId);
+        }
         public static SenhaTag GetById(int Id)
         {
             SenhaTag SenhaTag = SenhaTag.GetById(Id);
