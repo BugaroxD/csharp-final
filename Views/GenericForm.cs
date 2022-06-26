@@ -8,7 +8,7 @@ using Models;
 
 namespace Views
 {
-    // Formulário de Usuário
+    // Funções de Usuário
     public class UserForm : GenericBase
     {
         public static Function option;
@@ -100,7 +100,7 @@ namespace Views
         }
     }
 
-    // Formulário de Senha    
+    // Funções de Senha   
     public class PassForm : GenericBase
     {
         public static Senha senha = null;
@@ -117,6 +117,7 @@ namespace Views
         ComboBox comboCategory;
         Button bttnConfirm;
         Button bttnCancel;
+
         public PassForm(
             Function function,
             int id = 0
@@ -287,7 +288,181 @@ namespace Views
         {
             this.Close();
         }
+    }
 
+    // Funções da Tag
+    public class TagForm : GenericBase
+    {
+        public static Function option;
+        public static int tagId;
+        public List<GenericField> generics;
+        Button bttnConfirm;
+        Button bttnCancel;
+        public TagForm(
+            Function function,
+            int id = 0
+        ) : base()
+        {
+            option = function;
+            tagId = id;
+
+            Tag tag = null;
+            if (id > 0)
+            {
+                tag = TagController.GetTag(id);
+            }
+
+            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.Text = function == Function.Create
+                ? "Criar"
+                : "Alterar";
+
+            base.generics.Add(new GenericField("description", 10, 90, "Descrição", 280, 15, ' ', tag != null ? tag.Descricao : null));
+        
+            bttnConfirm = new Button();
+            bttnConfirm.Text = "Confirmar";
+            bttnConfirm.Size = new Size(80, 25);
+            bttnConfirm.Location = new Point(110, 205);
+            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+        
+            bttnCancel = new Button();
+            bttnCancel.Text = "Cancelar";
+            bttnCancel.Size = new Size(80, 25);
+            bttnCancel.Location = new Point(110, 240);
+            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+
+            foreach (GenericField generic in base.generics)
+            {
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
+            }
+
+            this.Controls.Add(bttnConfirm);
+            this.Controls.Add(bttnCancel);
+        }
+
+        private void BttnConfirmClick(object sender, EventArgs e)
+        {
+            
+            GenericField genericDescription = base.generics.Find((GenericField generic) => generic.id == "description");
+            try
+            {
+                if (option == Function.Create)
+                {
+                    TagController.InserirTag(
+                        genericDescription.textBox.Text
+                    );
+                    MessageBox.Show("Tag criada com sucesso");
+                }
+                else if (option == Function.Update)
+                {
+                   TagController.AlterarTag(
+                        tagId,
+                        genericDescription.textBox.Text
+                    );
+                    MessageBox.Show("Tag alterada com sucesso");
+                }
+            }
+            catch (Exception)
+            {
+                ErrorMessage.Show();
+            }
+        }
+
+        private void BttnCancelClick(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+
+    // Funções de Categoria
+    public class CategoryForm : GenericBase
+    {
+        public static Function option;
+        public static int categoryId;
+        public List<GenericField> generics;
+        Button bttnConfirm;
+        Button bttnCancel;
+        public CategoryForm(
+            Function function,
+            int id = 0
+        ) : base()
+        {
+            option = function;
+            categoryId = id;
+            
+            Categoria categoria = null;
+            if (id > 0) {
+                categoria = CategoriaController.GetCategoria(id);
+            }
+
+            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.Text = function == Function.Create
+                ? "Criar"
+                : "Alterar";
+
+            base.generics.Add(new GenericField("name", 10, 20, "Nome", 280, 15, ' ', categoria != null ? categoria.Nome : null));
+            base.generics.Add(new GenericField("description", 10, 90, "Descrição", 280, 15, ' ', categoria != null ? categoria.Descricao : null));
+
+            bttnConfirm = new Button();
+            bttnConfirm.Text = "Confirmar";
+            bttnConfirm.Size = new Size(80, 25);
+            bttnConfirm.Location = new Point(110, 205);
+            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+        
+            bttnCancel = new Button();
+            bttnCancel.Text = "Cancelar";
+            bttnCancel.Size = new Size(80, 25);
+            bttnCancel.Location = new Point(110, 240);
+            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+
+            foreach (Field field in base.generics)
+            {
+                this.Controls.Add(field.label);
+                this.Controls.Add(field.textBox);
+            }
+
+            this.Controls.Add(bttnConfirm);
+            this.Controls.Add(bttnCancel);
+        }
+
+        private void BttnConfirmClick(object sender, EventArgs e)
+        {
+            
+            GenericField genericName = base.generics.Find((GenericField generic) => generic.id == "name");
+            GenericField genericDescription = base.generics.Find((GenericField generic) => generic.id == "description");
+            try
+            {
+                if (option == Operation.Create)
+                {
+                    CategoriaController.InserirCategoria(
+                        genericName.textBox.Text,
+                        genericDescription.textBox.Text
+                    );
+                    MessageBox.Show("Parabéns sua categoria foi cadastrada com sucesso!", "Sucesso", MessageBoxButtons.OK);
+                    this.Close();
+                }
+                else if (option == Operation.Update)
+                {
+                   CategoriaController.AlterarCategoria(
+                        categoryId,
+                        genericName.textBox.Text,
+                        genericDescription.textBox.Text
+                    );
+                    MessageBox.Show("Parabéns sua categoria foi alterada com sucesso!", "Sucesso", MessageBoxButtons.OK);
+                    this.Close();
+                }
+            }
+            catch (Exception)
+            {
+                ErrorMessage.Show();
+            }
+        }
+        
+        private void BttnCancelClick(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
     
