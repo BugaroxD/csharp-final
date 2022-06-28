@@ -11,20 +11,21 @@ namespace Views
     {
         public List<GenericField> generics;
         Button bttnLogin;
-        Button bttnExit;
         Button bttnRegister;
+        Button bttnExit;
+        
         public LoginForm(): base()
         {
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(400, 400);
             this.Text = "Usuário";
 
-            base.generics.Add(new GenericField(this.Controls, 30, 30, "Usuário"));
-            base.generics.Add(new GenericField(this.Controls, 20, 90, "Senha", 240, 15, '*'));
+            base.generics.Add(new GenericField("user", 20, 20, "Usuário"));
+            base.generics.Add(new GenericField("password", 20, 90, "Senha", 240, 15, '*'));
 
-            bttnLogin = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);
+            bttnLogin = new Generic.FieldOnButton("Conectar", 80,25, 100,170);
             bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
 
-            bttnRegister = new Generic.FieldOnButton("Cadastrar novo usuário!", 50, 220, 100, 30);
+            bttnRegister = new Generic.FieldOnButton("Cadastrar novo usuário!", 80,25, 100,200);
             bttnRegister.Click += new EventHandler(this.ClickOnRegisterBttn);
 
             bttnExit = new Generic.FieldOnButton("Sair", 150, 220, 100, 30);
@@ -32,11 +33,13 @@ namespace Views
 
           
             this.Controls.Add(this.bttnLogin);
+            this.Controls.Add(this.bttnRegister);
             this.Controls.Add(this.bttnExit);
-
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Text = "Login";
+            foreach (GenericField generic in base.generics)
+            {
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
+            }
         }
 
         public void ClickOnLoginBttn(object sender, EventArgs e)
@@ -56,7 +59,8 @@ namespace Views
         }
           private void ClickOnRegisterBttn(object sender, EventArgs e)
         {
-            new UserForm(Function.Create).Show();
+            UsuarioCadastro new UserForm(Function.Create).Show();
+            this.Dispose();
         }
         public void ClickOnExitBttn(object sender, EventArgs e)
         {

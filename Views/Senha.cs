@@ -29,22 +29,21 @@ namespace Views
 
             bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
 			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
-            
+      
             bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
 			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
 
         // Select dos registros
 
-            string[] fields = {"Nome", "Descricao"};
-            this.listaView = new LabelListView<Models.Categoria>(this.Controls, "Lista de Categorias", Models.Categoria.ListaCategoria(), fields);
+            string[] generics = {"Nome", "CategoriaId", "Url", "Usuario", "SenhaEncrypt", "Procedimento"};
+            this.listView = new ListViewItems<Models.Senha>(this.Controls, "Lista de Senhas", Models.Senha.GetSenhas(), generics);
 
             this.components = new System.ComponentModel.Container();
 
-            this.Controls.Add(listView);
-            this.Controls.Add(bttnInsert);
-            this.Controls.Add(bttnUpdate);
-            this.Controls.Add(bttnDelete);
-            this.Controls.Add(bttnReturn);
+            this.Controls.Add(this.bttnInsert);
+            this.Controls.Add(this.bttnUpdate);
+            this.Controls.Add(this.bttnReturn);
+            this.Controls.Add(this.bttnDelete);
         }
 
         private void ClickOnInsertBttn(object sender, EventArgs e)

@@ -22,30 +22,29 @@ namespace Views
             this.ClientSize = new System.Drawing.Size(470, 470);
             this.Text = "Usuários";
 
-            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
-			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
-            
             bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
             bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
-
-            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
-			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
 
             bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
             bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
 
+            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
+			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
+      
+            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
+			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
+
+           
         // Select dos registros
 
-            string[] fields = {"Nome", "Descricao"};
-            this.listaView = new LabelListView<Models.Categoria>(this.Controls, "Lista de Categorias", Models.Categoria.ListaCategoria(), fields);
+            string[] generics = {"Nome", "Email"};
+            this.listView = new ListViewItems<Models.Usuario>(this.Controls, "Lista de Usuarios", Models.Usuario.GetUsuarios(), generics);
 
-            this.components = new System.ComponentModel.Container();
-
-            this.Controls.Add(this.listView);
-            this.Controls.Add(this.bttnReturn);
             this.Controls.Add(this.bttnInsert);
-            this.Controls.Add(this.bttnDelete);
             this.Controls.Add(this.bttnUpdate);
+            this.Controls.Add(this.bttnReturn);
+            this.Controls.Add(this.bttnDelete);
+            
         }
 
         // Funções dos botões

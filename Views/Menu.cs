@@ -32,10 +32,10 @@ namespace Views
 
             this.bttnCategory = new Generic.FieldOnButton("Categoria", 100, 50, 100, 30);
             bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
-
+            /*
             this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
             bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
-
+            */
             this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
             this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
 
@@ -73,12 +73,13 @@ namespace Views
             SenhaView SenhaViews = new SenhaView();
             SenhaViews.ShowDialog();
         }
-
+/*
         public void ClickOnTagBttn(object sender, EventArgs e)
         {
             TagView TagViews = new TagView(this);
             TagViews.ShowDialog();
         }
+        */
         
 
     }

@@ -36,22 +36,21 @@ namespace Views
 
         // Select dos registros
 
-            string[] fields = {"Nome", "Descricao"};
-            this.listaView = new LabelListView<Models.Categoria>(this.Controls, "Lista de Categorias", Models.Categoria.ListaCategoria(), fields);
+            string[] generics = {"Nome", "Descricao"};
+            this.listView = new ListViewItems<Models.Categoria>(this.Controls, "Lista de Categorias", Models.Categoria.GetCategorias(), generics);
 
             this.components = new System.ComponentModel.Container();
 
-            this.Controls.Add(listView);
-            this.Controls.Add(bttnInsert);
-            this.Controls.Add(bttnUpdate);
-            this.Controls.Add(bttnReturn);
-            this.Controls.Add(bttnDelete);
+            this.Controls.Add(this.bttnInsert);
+            this.Controls.Add(this.bttnUpdate);
+            this.Controls.Add(this.bttnReturn);
+            this.Controls.Add(this.bttnDelete);
             
         }
 
         private void ClickOnInsertBttn(object sender, EventArgs e)
         {
-            new FormCategoria(Operation.Create).Show();
+            new CategoryForm(Function.Create).Show();
             this.Dispose();
         }
 
@@ -60,7 +59,7 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                new FormCategoria(Operation.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                new CategoryForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
                 this.Dispose();
             }
             catch (Exception)
@@ -78,7 +77,7 @@ namespace Views
                 DialogResult result = MessageBox.Show($"Deseja excluir a categoria {categoriaId}?", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if(result == DialogResult.Yes)
                 {
-                    CategoriaController.RemoverItem(categoriaId);
+                    CategoriaController.ExcluirCategoria(categoriaId);
                 }
                 this.Close();
             }
