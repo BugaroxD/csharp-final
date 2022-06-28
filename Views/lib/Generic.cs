@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace lib
 {
@@ -154,4 +156,41 @@ namespace lib
             }
     public enum Function
             { Create, Update }
+
+    public class ListViewItems<T> : ListView
+    {
+        public ListViewItems(ControlCollection Ref, string Name, IEnumerable<T> list, string[] generics)
+        {
+            this.Columns.Add("Id", 100);
+            foreach (string generic in generics)
+            {
+                this.Columns.Add(generic, 100);
+            }
+            foreach (T item in list)
+            {
+                Type type = item.GetType();
+                PropertyInfo prop = type.GetProperty("Id");
+                ListViewItem newItem = new ListViewItem(prop.GetValue(item).ToString());
+                foreach (string generic in generics)
+                {
+                    prop = type.GetProperty(generic);
+                    newItem.SubItems.Add(prop.GetValue(item).ToString());
+                }
+                this.Items.Add(newItem);
+            }
+            this.Name = Name;
+            this.Location = new System.Drawing.Point(10, 10);
+            this.ClientSize = new System.Drawing.Size(250, 340);
+
+            this.View = View.Details;
+            this.LabelEdit = true;
+            this.AllowColumnReorder = true;
+            this.CheckBoxes = true;
+            this.FullRowSelect = true;
+            this.GridLines = true;
+            this.Sorting = SortOrder.Ascending;
+
+            Ref.Add(this);
+        }
+    }
 }

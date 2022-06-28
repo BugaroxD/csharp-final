@@ -1,38 +1,37 @@
 using System;
 using System.Windows.Forms;
-using lib;
+using System.Drawing;
 using Models;
 using Controllers;
-using System.Drawing;
+using lib;
 
 namespace Views
 {
-    public class UsuarioView : Form
+    public class SenhaView : Form
     {
-
+         private System.ComponentModel.IContainer components = null;
         ListView listView;
         Button bttnInsert;
         Button bttnUpdate;
-        Button bttnReturn;
         Button bttnDelete;
-        
+        Button bttnReturn;
 
-        public UsuarioView()
+        public SenhaView()
         {
             this.ClientSize = new System.Drawing.Size(470, 470);
-            this.Text = "Usuários";
+            this.Text = "Senhas";
+
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
+            bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
+
+            bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
+            bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
 
             bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
 			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
             
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
-            bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
-
             bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
 			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
-
-            bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
-            bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
 
         // Select dos registros
 
@@ -41,17 +40,17 @@ namespace Views
 
             this.components = new System.ComponentModel.Container();
 
-            this.Controls.Add(this.listView);
-            this.Controls.Add(this.bttnReturn);
-            this.Controls.Add(this.bttnInsert);
-            this.Controls.Add(this.bttnDelete);
-            this.Controls.Add(this.bttnUpdate);
+            this.Controls.Add(listView);
+            this.Controls.Add(bttnInsert);
+            this.Controls.Add(bttnUpdate);
+            this.Controls.Add(bttnDelete);
+            this.Controls.Add(bttnReturn);
         }
 
-        // Funções dos botões
-       private void ClickOnInsertBttn(object sender, EventArgs e)
+        private void ClickOnInsertBttn(object sender, EventArgs e)
         {
-            new UserForm(Function.Create).Show();
+            new PassForm(Function.Create).Show();
+            this.Dispose();
         }
 
         private void ClickOnUpdateBttn(object sender, EventArgs e)
@@ -59,7 +58,8 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                new UserForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                new PassForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                this.Dispose();
             }
             catch (Exception)
             {
@@ -72,7 +72,13 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                UsuarioController.ExcluirUsuario(Convert.ToInt32(selectedItem.Text)); 
+                int senhaId = Convert.ToInt32(selectedItem.Text);
+                DialogResult result = MessageBox.Show($"Deseja excluir a senha {senhaId}?", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    SenhaController.ExcluirSenha(senhaId);
+                }
+                this.Close();
             }
             catch (Exception)
             {

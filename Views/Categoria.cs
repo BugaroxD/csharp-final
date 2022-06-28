@@ -1,15 +1,15 @@
 using System;
 using System.Windows.Forms;
-using lib;
+using System.Drawing;
 using Models;
 using Controllers;
-using System.Drawing;
+using lib;
 
 namespace Views
 {
-    public class UsuarioView : Form
+    public class CategoriaView : Form
     {
-
+        private System.ComponentModel.IContainer components = null;
         ListView listView;
         Button bttnInsert;
         Button bttnUpdate;
@@ -17,22 +17,22 @@ namespace Views
         Button bttnDelete;
         
 
-        public UsuarioView()
+        public CategoriaView() 
         {
             this.ClientSize = new System.Drawing.Size(470, 470);
-            this.Text = "Usuários";
+            this.Text = "Categorias";
 
-            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
-			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
-            
             bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
             bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
 
-            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
-			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
-
             bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
             bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
+
+            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
+			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
+      
+            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
+			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
 
         // Select dos registros
 
@@ -41,17 +41,18 @@ namespace Views
 
             this.components = new System.ComponentModel.Container();
 
-            this.Controls.Add(this.listView);
-            this.Controls.Add(this.bttnReturn);
-            this.Controls.Add(this.bttnInsert);
-            this.Controls.Add(this.bttnDelete);
-            this.Controls.Add(this.bttnUpdate);
+            this.Controls.Add(listView);
+            this.Controls.Add(bttnInsert);
+            this.Controls.Add(bttnUpdate);
+            this.Controls.Add(bttnReturn);
+            this.Controls.Add(bttnDelete);
+            
         }
 
-        // Funções dos botões
-       private void ClickOnInsertBttn(object sender, EventArgs e)
+        private void ClickOnInsertBttn(object sender, EventArgs e)
         {
-            new UserForm(Function.Create).Show();
+            new FormCategoria(Operation.Create).Show();
+            this.Dispose();
         }
 
         private void ClickOnUpdateBttn(object sender, EventArgs e)
@@ -59,7 +60,8 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                new UserForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                new FormCategoria(Operation.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                this.Dispose();
             }
             catch (Exception)
             {
@@ -72,13 +74,18 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                UsuarioController.ExcluirUsuario(Convert.ToInt32(selectedItem.Text)); 
+                int categoriaId = Convert.ToInt32(selectedItem.Text);
+                DialogResult result = MessageBox.Show($"Deseja excluir a categoria {categoriaId}?", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    CategoriaController.RemoverItem(categoriaId);
+                }
+                this.Close();
             }
             catch (Exception)
             {
                 ErrorMessage.Show();
-            }
-            
+            }   
         }
 
         private void ClickOnReturnBttn(object sender, EventArgs e)

@@ -18,13 +18,13 @@ namespace Views
             this.ClientSize = new System.Drawing.Size(300, 300);
             this.Text = "Usuário";
 
-            base.generics.Add(new GenericField("user", 30, 30, "Usuário"));
-            base.generics.Add(new GenericField("password", 20, 90, "Senha", 240, 15, '*'));
+            base.generics.Add(new GenericField(this.Controls, 30, 30, "Usuário"));
+            base.generics.Add(new GenericField(this.Controls, 20, 90, "Senha", 240, 15, '*'));
 
             bttnLogin = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);
             bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
 
-            bttnRegister = new Generic.FieldOnButton("Cadastrar", 50, 220, 100, 30);
+            bttnRegister = new Generic.FieldOnButton("Cadastrar novo usuário!", 50, 220, 100, 30);
             bttnRegister.Click += new EventHandler(this.ClickOnRegisterBttn);
 
             bttnExit = new Generic.FieldOnButton("Sair", 150, 220, 100, 30);

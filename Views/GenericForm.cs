@@ -43,13 +43,13 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 220);
-            bttnConfirm.Click += new EventHandler(this.BttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 255);
-            bttnCancel.Click += new EventHandler(this.BttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
             foreach (GenericField generics in base.generics)
             {
@@ -61,7 +61,7 @@ namespace Views
             this.Controls.Add(bttnCancel);
         }
 
-        private void BttnConfirmClick(object sender, EventArgs e)
+        private void ClickOnConfirmBttn(object sender, EventArgs e)
         {
             GenericField genericName = base.generics.Find((GenericField generic) => generic.id == "name");
             GenericField genericEmail = base.generics.Find((GenericField generic) => generic.id == "email");
@@ -94,7 +94,7 @@ namespace Views
             }
         }
 
-        private void BttnCancelClick(object sender, EventArgs e)
+        private void ClickOnCancelBttn(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -197,13 +197,13 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 680);
-            bttnConfirm.Click += new EventHandler(this.BttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 710);
-            bttnCancel.Click += new EventHandler(this.BttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
             foreach (GenericField field in base.generics)
             {
@@ -227,7 +227,7 @@ namespace Views
             this.Controls.Add(bttnCancel);
         }
 
-        private void BttnConfirmClick(object sender, EventArgs e)
+        private void ClickOnConfirmBttn(object sender, EventArgs e)
         {
             
             GenericField genericName = base.generics.Find((GenericField field) => field.id == "name");
@@ -284,7 +284,7 @@ namespace Views
             }
         }
 
-        private void BttnCancelClick(object sender, EventArgs e)
+        private void ClickOnCancelBttn(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -323,13 +323,13 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 205);
-            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 240);
-            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
             foreach (GenericField generic in base.generics)
             {
@@ -341,7 +341,7 @@ namespace Views
             this.Controls.Add(bttnCancel);
         }
 
-        private void BttnConfirmClick(object sender, EventArgs e)
+        private void ClickOnConfirmBttn(object sender, EventArgs e)
         {
             
             GenericField genericDescription = base.generics.Find((GenericField generic) => generic.id == "description");
@@ -369,7 +369,7 @@ namespace Views
             }
         }
 
-        private void BttnCancelClick(object sender, EventArgs e)
+        private void ClickOnCancelBttn(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -393,7 +393,7 @@ namespace Views
             
             Categoria categoria = null;
             if (id > 0) {
-                categoria = CategoriaController.GetCategoria(id);
+                categoria = CategoriaController.GetCategorias(id);
             }
 
             this.ClientSize = new System.Drawing.Size(300, 300);
@@ -408,32 +408,32 @@ namespace Views
             bttnConfirm.Text = "Confirmar";
             bttnConfirm.Size = new Size(80, 25);
             bttnConfirm.Location = new Point(110, 205);
-            bttnConfirm.Click += new EventHandler(this.bttnConfirmClick);
+            bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
         
             bttnCancel = new Button();
             bttnCancel.Text = "Cancelar";
             bttnCancel.Size = new Size(80, 25);
             bttnCancel.Location = new Point(110, 240);
-            bttnCancel.Click += new EventHandler(this.bttnCancelClick);
+            bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
-            foreach (Field field in base.generics)
+            foreach (GenericField generic in base.generics)
             {
-                this.Controls.Add(field.label);
-                this.Controls.Add(field.textBox);
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
             }
 
             this.Controls.Add(bttnConfirm);
             this.Controls.Add(bttnCancel);
         }
 
-        private void BttnConfirmClick(object sender, EventArgs e)
+        private void ClickOnConfirmBttn(object sender, EventArgs e)
         {
             
             GenericField genericName = base.generics.Find((GenericField generic) => generic.id == "name");
             GenericField genericDescription = base.generics.Find((GenericField generic) => generic.id == "description");
             try
             {
-                if (option == Operation.Create)
+                if (option == Function.Create)
                 {
                     CategoriaController.InserirCategoria(
                         genericName.textBox.Text,
@@ -442,7 +442,7 @@ namespace Views
                     MessageBox.Show("Parabéns sua categoria foi cadastrada com sucesso!", "Sucesso", MessageBoxButtons.OK);
                     this.Close();
                 }
-                else if (option == Operation.Update)
+                else if (option == Function.Update)
                 {
                    CategoriaController.AlterarCategoria(
                         categoryId,
@@ -458,8 +458,8 @@ namespace Views
                 ErrorMessage.Show();
             }
         }
-        
-        private void BttnCancelClick(object sender, EventArgs e)
+
+        private void ClickOnCancelBttn(object sender, EventArgs e)
         {
             this.Close();
         }
