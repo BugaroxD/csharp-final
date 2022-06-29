@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Models;
 
 namespace Controllers
@@ -13,25 +14,33 @@ namespace Controllers
             string Senha
         )
         {
-            if (String.IsNullOrEmpty(Nome))
+             if(String.IsNullOrEmpty(Nome))
             {
-                throw new Exception("Nome inválido");
+                throw new Exception("Nome do usuário não pode ser vazio.");
             }
 
-            if (String.IsNullOrEmpty(Email))
+            if(String.IsNullOrEmpty(Email))
             {
-                throw new Exception("Descrição inválida");
+                throw new Exception("Email do usuário não pode ser vazio.");
             }
 
-            if (String.IsNullOrEmpty(Senha))
+            Regex rx = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            if(!rx.IsMatch(Email))
             {
-                throw new Exception("Senha inválido");
-            }
-            else
-            {
-                Senha = BCrypt.Net.BCrypt.HashPassword(Senha);
+                throw new Exception("Email inválido.");
             }
 
+            if(String.IsNullOrEmpty(Senha))
+            {   
+                throw new Exception("Senha não pode ser vazio.");
+            }
+
+            int minChar = 8;
+            bool invalidPass = Senha.Length < minChar;
+            if (invalidPass)
+            {
+                throw new Exception("A senha deve possuir no mínimo 8 caracteres.");
+            }  
             return new Usuario(Nome, Email, Senha);
         }
         public static Usuario AlterarUsuario(
@@ -52,10 +61,18 @@ namespace Controllers
             {
                 usuario.Email = Email;
             }
-            if (!String.IsNullOrEmpty(Senha))
+            if(!String.IsNullOrEmpty(Senha) && !BCrypt.Net.BCrypt.Equals(Senha, usuario.Senha))
             {
                 usuario.Senha = BCrypt.Net.BCrypt.HashPassword(Senha);
             }
+
+            Usuario.AlterarUsuario(
+                Id,
+                Nome,
+                Email,
+                Senha
+            );
+
 
             return usuario;
         }
@@ -85,6 +102,13 @@ namespace Controllers
             }
 
             return usuario;
+        }
+         public static void Auth(
+            string Email,
+            string Senha
+        )
+        {
+            Usuario.Auth(Email, Senha);
         }
     }
 }

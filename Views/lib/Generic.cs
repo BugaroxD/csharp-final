@@ -6,41 +6,7 @@ using System.Reflection;
 
 namespace lib
 {
-    public class GenericField 
-    {
-        public string id;
-        public TextBox textBox;
-        public Label label;
-        
-        public GenericField(
-            string id,
-            int pointA,
-            int pointB,
-            string label,
-            int sizeA = 280,
-            int sizeB = 55,
-            char characterPass = ' ',
-            string valueDefault = ""
-            
-        )
-        {
-            this.id = id;
-
-            this.textBox = new TextBox();
-            this.textBox.Location = new Point(pointA, pointB + 30);
-            this.textBox.Size = new Size(sizeA, sizeB);
-            this.textBox.Text = valueDefault;
-
-            this.label = new Label();
-            this.label.Text = label;
-            this.label.Location = new Point(pointA, pointB);
-
-            if (!Char.IsWhiteSpace(characterPass))
-            {
-                this.textBox.PasswordChar = characterPass;
-            }
-        }
-    }
+    
     public class Generic : Form
     {
         public Generic()
@@ -70,8 +36,8 @@ namespace lib
             public FieldOnButton(string Text, int x, int y, int Z, int W)
             {
                 this.Text = Text;
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
                 this.BackColor = Color.White;
             }
         }

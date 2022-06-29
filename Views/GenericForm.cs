@@ -30,25 +30,19 @@ namespace Views
                 usuario = UsuarioController.GetUsuarios(id);
             }
 
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(400, 400);
             this.Text = function == Function.Create
                 ? "Criar"
                 : "Alterar";
 
-            base.generics.Add(new GenericField("name", 10, 20, "Nome", 280, 15));
-            base.generics.Add(new GenericField("email", 10, 80, "Email", 280, 15));
-            base.generics.Add(new GenericField("senha", 10, 140, "Senha", 280, 55, '*'));
+            base.generics.Add(new GenericField("name", 30, 40, "Nome", 300, 35, ' ', usuario != null ? usuario.Nome : null));
+            base.generics.Add(new GenericField("email", 30, 100, "Email", 300, 35 , ' ', usuario != null ? usuario.Email : null));
+            base.generics.Add(new GenericField("password", 30, 160, "Senha", 300, 35, '*', usuario != null ? usuario.Senha : null));
 
-            bttnConfirm = new Button();
-            bttnConfirm.Text = "Confirmar";
-            bttnConfirm.Size = new Size(80, 25);
-            bttnConfirm.Location = new Point(110, 220);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 100, 45, 130,240);
             bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
-        
-            bttnCancel = new Button();
-            bttnCancel.Text = "Cancelar";
-            bttnCancel.Size = new Size(80, 25);
-            bttnCancel.Location = new Point(110, 255);
+
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 100, 45, 130, 275);
             bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
             foreach (GenericField generics in base.generics)
@@ -65,7 +59,7 @@ namespace Views
         {
             GenericField genericName = base.generics.Find((GenericField generic) => generic.id == "name");
             GenericField genericEmail = base.generics.Find((GenericField generic) => generic.id == "email");
-            GenericField genericsenha = base.generics.Find((GenericField generic) => generic.id == "senha");
+            GenericField genericsenha = base.generics.Find((GenericField generic) => generic.id == "password");
             try
             {
                 if (option == Function.Create)
@@ -193,16 +187,10 @@ namespace Views
             this.checkBoxTags.SelectionMode = SelectionMode.One;
             this.checkBoxTags.CheckOnClick = true;            
 
-            bttnConfirm = new Button();
-            bttnConfirm.Text = "Confirmar";
-            bttnConfirm.Size = new Size(80, 25);
-            bttnConfirm.Location = new Point(110, 680);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 100, 45, 110, 680);
             bttnConfirm.Click += new EventHandler(this.ClickOnConfirmBttn);
-        
-            bttnCancel = new Button();
-            bttnCancel.Text = "Cancelar";
-            bttnCancel.Size = new Size(80, 25);
-            bttnCancel.Location = new Point(110, 710);
+
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 100, 25, 110, 710);
             bttnCancel.Click += new EventHandler(this.ClickOnCancelBttn);
 
             foreach (GenericField field in base.generics)

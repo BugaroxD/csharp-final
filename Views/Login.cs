@@ -16,19 +16,19 @@ namespace Views
         
         public LoginForm(): base()
         {
-            this.ClientSize = new System.Drawing.Size(400, 400);
+            this.ClientSize = new System.Drawing.Size(280, 280);
             this.Text = "Usuário";
 
             base.generics.Add(new GenericField("user", 20, 20, "Usuário"));
             base.generics.Add(new GenericField("password", 20, 90, "Senha", 240, 15, '*'));
 
-            bttnLogin = new Generic.FieldOnButton("Conectar", 80,25, 100,170);
+            bttnLogin = new Generic.FieldOnButton("Conectar", 100, 45, 30,160);
             bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
 
-            bttnRegister = new Generic.FieldOnButton("Cadastrar novo usuário!", 80,25, 100,200);
+            bttnRegister = new Generic.FieldOnButton("Cadastrar novo usuário!", 170, 50, 50,220);
             bttnRegister.Click += new EventHandler(this.ClickOnRegisterBttn);
 
-            bttnExit = new Generic.FieldOnButton("Sair", 150, 220, 100, 30);
+            bttnExit = new Generic.FieldOnButton("Sair", 100, 45, 150, 160);
             bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
 
           
@@ -44,12 +44,12 @@ namespace Views
 
         public void ClickOnLoginBttn(object sender, EventArgs e)
         {
-            GenericField fieldLogin = base.generics.Find((GenericField field) => field.id == "Usuário");
-            GenericField fieldSenha = base.generics.Find((GenericField field) => field.id == "Senha");
+            GenericField genericLogin = base.generics.Find((GenericField generic) => generic.id == "Usuário");
+            GenericField genericSenha = base.generics.Find((GenericField generic) => generic.id == "Senha");
 
             try
             {
-                Usuario.Auth(fieldLogin.textBox.Text, fieldSenha.textBox.Text);
+                Usuario.Auth(genericLogin.textBox.Text, genericSenha.textBox.Text);
                 (new MenuForm()).Show();
             }
             catch (Exception err)
@@ -59,7 +59,7 @@ namespace Views
         }
           private void ClickOnRegisterBttn(object sender, EventArgs e)
         {
-            UsuarioCadastro new UserForm(Function.Create).Show();
+            new UserForm(Function.Create).Show();
             this.Dispose();
         }
         public void ClickOnExitBttn(object sender, EventArgs e)

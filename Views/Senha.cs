@@ -9,7 +9,7 @@ namespace Views
 {
     public class SenhaView : Form
     {
-         private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
         ListView listView;
         Button bttnInsert;
         Button bttnUpdate;
