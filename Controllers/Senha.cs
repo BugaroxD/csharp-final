@@ -58,7 +58,7 @@ namespace Controllers
         string Procedimento
     )
     {
-      Senha senha = GetSenhas(Id);
+      Senha senha = GetSenha(Id);
 
       if (!String.IsNullOrEmpty(Nome))
       {
@@ -91,7 +91,7 @@ namespace Controllers
         int Id
     )
     {
-      Senha senha = GetSenhas(Id);
+      Senha senha = GetSenha(Id);
       Senha.RemoverSenha(senha);
       return senha;
     }
@@ -100,6 +100,13 @@ namespace Controllers
     {
       return Senha.GetSenhas();
     }
+
+    public static Senha GetSenha(
+            int Id
+        )
+        {
+            return Senha.GetSenha(Id);
+        }
 
     public static Senha GetSenhas(int Id)
     {

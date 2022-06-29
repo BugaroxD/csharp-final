@@ -12,33 +12,27 @@ namespace lib
         public Generic()
         {}
 
-        public class TamOnLabelField : Label
+        public class FieldOnLabel : Label
         {
-            public TamOnLabelField(string Text, int x, int y, int Z, int W)
+            public FieldOnLabel(string Text, int x, int y, int Z, int W)
             {
                 this.Text = Text;
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
             }
         }
 
-        public class FieldOnLabel : Label
-        {
-            public FieldOnLabel(string Text, int x, int y)
-            {
-                this.Text = Text;
-                this.Location = new Point(x, y);
-            }
-        }
+        public delegate void HandleButton(object sender, EventArgs e);
 
         public class FieldOnButton : Button
         {
-            public FieldOnButton(string Text, int x, int y, int Z, int W)
+            public FieldOnButton(string Text, int x, int y, int Z, int W, HandleButton handleAction)
             {
                 this.Text = Text;
                 this.Size = new Size(x, y);
                 this.Location = new Point(Z, W);
                 this.BackColor = Color.White;
+                this.Click += new EventHandler(handleAction);
             }
         }
 
@@ -46,8 +40,8 @@ namespace lib
         {
             public FieldOnTextBox(int x, int y, int Z, int W)
             {
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
             }
         }
 
@@ -146,7 +140,7 @@ namespace lib
             }
             this.Name = Name;
             this.Location = new System.Drawing.Point(10, 10);
-            this.ClientSize = new System.Drawing.Size(250, 340);
+            this.ClientSize = new System.Drawing.Size(280, 340);
 
             this.View = View.Details;
             this.LabelEdit = true;

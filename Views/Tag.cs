@@ -17,23 +17,17 @@ namespace Views
 
         public TagView()
         {
-            this.ClientSize = new System.Drawing.Size(470, 470);
+            this.ClientSize = new System.Drawing.Size(310, 450);
             this.Text = "Tags";
 
-             bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
-            bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 40, 370, this.ClickOnInsertBttn);
+            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 170, 370, this.ClickOnUpdateBttn);
+            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  170, 410, this.ClickOnReturnBttn);
+            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 40, 410, this.ClickOnDeleteBttn);
 
-            bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
-            bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
+        // Select dos registros
 
-            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
-			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
-      
-            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
-			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
-
-
-            string[] generics = {"Id", "Descrição"};
+            string[] generics = {"Descricao"};
             this.listView = new ListViewItems<Models.Tag>(this.Controls, "Lista de Tags", Models.Tag.GetTags(), generics);
 
             this.Controls.Add(this.bttnInsert);
@@ -41,6 +35,8 @@ namespace Views
             this.Controls.Add(this.bttnReturn);
             this.Controls.Add(this.bttnDelete);
         }
+
+        // Funções dos botões
 
         private void ClickOnInsertBttn(object sender, EventArgs e)
         {

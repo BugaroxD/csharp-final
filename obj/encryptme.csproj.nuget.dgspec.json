@@ -1,38 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jefferson.clemente\\Documents\\GitHub\\csharp-final\\encryptme.csproj": {}
+    "C:\\Users\\jeffe\\Documents\\GitHub\\csharp-final\\encryptme.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jefferson.clemente\\Documents\\GitHub\\csharp-final\\encryptme.csproj": {
+    "C:\\Users\\jeffe\\Documents\\GitHub\\csharp-final\\encryptme.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jefferson.clemente\\Documents\\GitHub\\csharp-final\\encryptme.csproj",
+        "projectUniqueName": "C:\\Users\\jeffe\\Documents\\GitHub\\csharp-final\\encryptme.csproj",
         "projectName": "encryptme",
-        "projectPath": "C:\\Users\\jefferson.clemente\\Documents\\GitHub\\csharp-final\\encryptme.csproj",
-        "packagesPath": "C:\\Users\\jefferson.clemente\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jefferson.clemente\\Documents\\GitHub\\csharp-final\\obj\\",
+        "projectPath": "C:\\Users\\jeffe\\Documents\\GitHub\\csharp-final\\encryptme.csproj",
+        "packagesPath": "C:\\Users\\jeffe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jeffe\\Documents\\GitHub\\csharp-final\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jefferson.clemente\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\jeffe\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -44,7 +35,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "BCrypt.Net-Next": {
               "target": "Package",
@@ -81,8 +71,16 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.25, 3.1.25]"
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
             }
           ],
           "frameworkReferences": {
@@ -93,7 +91,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.418\\RuntimeIdentifierGraph.json"
         }
       }
     }

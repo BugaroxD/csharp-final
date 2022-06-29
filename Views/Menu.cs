@@ -8,11 +8,7 @@ namespace Views
 {
     public class MenuForm : Form
     {
-        
-        private System.ComponentModel.IContainer components = null;
-
-        Label lblTitle;
-
+        Label lblMenu;
         Button bttnUser;
         Button bttnExit;
         Button bttnCategory;
@@ -21,67 +17,49 @@ namespace Views
 
         public MenuForm()
         {
+            this.ClientSize = new System.Drawing.Size(230, 210);
+            this.Text = "Menu";
 
-            this.lblTitle = new Generic.TamOnLabelField($"Bem vindo(a)!", 120, 15, 150, 30);
-
-            this.bttnUser = new Generic.FieldOnButton("Usuário", 100, 170, 100, 30);
-            bttnUser.Click += new EventHandler(this.ClickOnUserBttn);
-
-            this.bttnPassword = new Generic.FieldOnButton("Senhas", 100, 170, 100, 30);
-            bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
-
-            this.bttnCategory = new Generic.FieldOnButton("Categoria", 100, 50, 100, 30);
-            bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
-            /*
-            this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
-            bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
-            */
-            this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
-            bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
-
-            this.Controls.Add(this.lblTitle);
+            this.lblMenu = new Generic.FieldOnLabel($"Olá, {Usuario.UsuarioAuth.Nome}", 220, 20, 0, 20);
+            lblMenu.TextAlign = ContentAlignment.MiddleCenter;
+            this.bttnUser = new Generic.FieldOnButton("Usuários", 90, 35, 15, 60, this.ClickOnUserBttn);
+            this.bttnPassword = new Generic.FieldOnButton("Senhas", 90, 35, 120, 60, this.ClickOnPasswordBttn);
+            this.bttnCategory = new Generic.FieldOnButton("Categorias", 90, 35, 15, 110, this.ClickOnCategoryBttn);
+            this.bttnTags = new Generic.FieldOnButton("Tags", 90, 35, 120, 110, this.ClickOnTagBttn);
+            this.bttnExit = new Generic.FieldOnButton("Sair", 100, 35, 60, 160, this.ClickOnExitBttn);
+            
+            this.Controls.Add(this.lblMenu);
             this.Controls.Add(this.bttnCategory);
             this.Controls.Add(this.bttnTags);
             this.Controls.Add(this.bttnPassword);
             this.Controls.Add(this.bttnUser);
             this.Controls.Add(this.bttnExit);
-
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 350);
-            this.Text = "Menu";
+            
         }
 
+        public void ClickOnUserBttn(object sender, EventArgs e)
+        {
+            new UsuarioView().Show();
+        }
+        
+        public void ClickOnPasswordBttn(object sender, EventArgs e)
+        {
+            new SenhaView().Show();
+        }
+               
+        public void ClickOnCategoryBttn(object sender, EventArgs e)
+        {
+           new CategoriaView().Show();
+        }
+
+        public void ClickOnTagBttn(object sender, EventArgs e)
+        {
+            new TagView().Show();
+        }
+        
         public void ClickOnExitBttn(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        public void ClickOnUserBttn(object sender, EventArgs e)
-        {
-            UsuarioView UsuarioViews = new UsuarioView();
-            UsuarioViews.ShowDialog();
-        }
-        
-        public void ClickOnCategoryBttn(object sender, EventArgs e)
-        {
-            CategoriaView CategoriaViews = new CategoriaView();
-            CategoriaViews.ShowDialog();
-        }
-
-        public void ClickOnPasswordBttn(object sender, EventArgs e)
-        {
-            SenhaView SenhaViews = new SenhaView();
-            SenhaViews.ShowDialog();
-        }
-/*
-        public void ClickOnTagBttn(object sender, EventArgs e)
-        {
-            TagView TagViews = new TagView(this);
-            TagViews.ShowDialog();
-        }
-        */
-        
-
     }
-
 }

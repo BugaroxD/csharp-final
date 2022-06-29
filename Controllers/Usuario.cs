@@ -41,8 +41,10 @@ namespace Controllers
             {
                 throw new Exception("A senha deve possuir no mínimo 8 caracteres.");
             }  
-            return new Usuario(Nome, Email, Senha);
+            return new Usuario(Nome, Email, BCrypt.Net.BCrypt.HashPassword(Senha));
         }
+        
+
         public static Usuario AlterarUsuario(
             int Id,
             string Nome,
@@ -50,17 +52,18 @@ namespace Controllers
             string Senha
         )
         {
-            Usuario usuario = GetUsuarios(Id);
+            Usuario usuario = GetUsuario(Id);
 
-            if (!String.IsNullOrEmpty(Nome))
+            if (String.IsNullOrEmpty(Nome))
             {
                 usuario.Nome = Nome;
             }
 
-            if (!String.IsNullOrEmpty(Email))
+            if (String.IsNullOrEmpty(Email))
             {
                 usuario.Email = Email;
             }
+
             if(!String.IsNullOrEmpty(Senha) && !BCrypt.Net.BCrypt.Equals(Senha, usuario.Senha))
             {
                 usuario.Senha = BCrypt.Net.BCrypt.HashPassword(Senha);
@@ -76,18 +79,28 @@ namespace Controllers
 
             return usuario;
         }
+
         public static Usuario ExcluirUsuario(
            int Id
        )
         {
-            Usuario usuario = GetUsuarios(Id);
+            Usuario usuario = GetUsuario(Id);
             Usuario.RemoverUsuario(usuario);
             return usuario;
         }
+
         public static IEnumerable<Usuario> VisualizarUsuario()
         {
             return Usuario.GetUsuarios();
         }
+
+        public static Usuario GetUsuario(
+            int Id
+        )
+        {
+            return Usuario.GetUsuario(Id);
+        }
+
         public static Usuario GetUsuarios(int Id)
         {
             Usuario usuario = (

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repository;
+using System;
 using System.Windows.Forms;
+using lib;
 
 namespace Models
 {
@@ -101,13 +103,19 @@ namespace Models
 
         public static void Auth(string Email, string Senha)
         {
-            Usuario usuario = GetUsuarios()
-                .Where(it => it.Email == Email 
-                    && BCrypt.Net.BCrypt.Verify(Senha, it.Senha)
-                )
-                .First();
+            try {
+                Usuario usuario = GetUsuarios()
+                    .Where(it => it.Email == Email 
+                        && BCrypt.Net.BCrypt.Verify(Senha, it.Senha)
+                    )
+                    .First();
             
-            UsuarioAuth = usuario;
+                UsuarioAuth = usuario;
+            }
+            catch
+            {
+                throw new Exception("Usuário ou senha inválido.");
+            }
         }
     }
 }

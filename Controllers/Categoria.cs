@@ -31,7 +31,7 @@ namespace Controllers
             string Descricao
         )
         {
-            Categoria categoria = GetCategorias(Id);
+            Categoria categoria = GetCategoria(Id);
 
             if (!String.IsNullOrEmpty(Nome))
             {
@@ -49,7 +49,7 @@ namespace Controllers
            int Id
        )
         {
-            Categoria categoria = GetCategorias(Id);
+            Categoria categoria = GetCategoria(Id);
             Categoria.RemoverCategoria(categoria);
             return categoria;
         }
@@ -58,6 +58,14 @@ namespace Controllers
         {
             return Categoria.GetCategorias();
         }
+
+        public static Categoria GetCategoria(
+            int Id
+        )
+        {
+            return Categoria.GetCategoria(Id);
+        }
+
 
         public static Categoria GetCategorias(int Id)
         {

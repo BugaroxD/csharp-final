@@ -9,7 +9,6 @@ namespace Views
 {
     public class CategoriaView : Form
     {
-        private System.ComponentModel.IContainer components = null;
         ListView listView;
         Button bttnInsert;
         Button bttnUpdate;
@@ -19,27 +18,18 @@ namespace Views
 
         public CategoriaView() 
         {
-            this.ClientSize = new System.Drawing.Size(470, 470);
+            this.ClientSize = new System.Drawing.Size(300, 450);
             this.Text = "Categorias";
 
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
-            bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
-
-            bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
-            bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
-
-            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
-			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
-      
-            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
-			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
-
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 40, 370, this.ClickOnInsertBttn);
+            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 170, 370, this.ClickOnUpdateBttn);
+            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  170, 410, this.ClickOnReturnBttn);
+            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 40, 410, this.ClickOnDeleteBttn);
+			
         // Select dos registros
 
             string[] generics = {"Nome", "Descricao"};
             this.listView = new ListViewItems<Models.Categoria>(this.Controls, "Lista de Categorias", Models.Categoria.GetCategorias(), generics);
-
-            this.components = new System.ComponentModel.Container();
 
             this.Controls.Add(this.bttnInsert);
             this.Controls.Add(this.bttnUpdate);
@@ -47,6 +37,8 @@ namespace Views
             this.Controls.Add(this.bttnDelete);
             
         }
+
+        // Funções dos botões
 
         private void ClickOnInsertBttn(object sender, EventArgs e)
         {
@@ -73,11 +65,11 @@ namespace Views
             try
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                int categoriaId = Convert.ToInt32(selectedItem.Text);
-                DialogResult result = MessageBox.Show($"Deseja excluir a categoria {categoriaId}?", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                int categoryId = Convert.ToInt32(selectedItem.Text);
+                DialogResult result = MessageBox.Show($"Para efetuar a exclusão da categoria {categoryId} clicar em SIM! Se for engano clique em NÃO!", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if(result == DialogResult.Yes)
                 {
-                    CategoriaController.ExcluirCategoria(categoriaId);
+                    CategoriaController.ExcluirCategoria(categoryId);
                 }
                 this.Close();
             }
