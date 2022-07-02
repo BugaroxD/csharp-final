@@ -30,17 +30,17 @@ namespace Views
                 usuario = UsuarioController.GetUsuario(id);
             }
 
-            this.ClientSize = new System.Drawing.Size(360, 360);
+            this.ClientSize = new System.Drawing.Size(345, 280);
             this.Text = function == Function.Create
                 ? "Cadastro de usuário"
                 : "Alteração usuário";
 
-            base.generics.Add(new GenericField("name", 30, 40, "Nome", 300, 35, ' ', usuario != null ? usuario.Nome : null));
-            base.generics.Add(new GenericField("email", 30, 100, "Email", 300, 35 , ' ', usuario != null ? usuario.Email : null));
-            base.generics.Add(new GenericField("senha", 30, 160, "Senha", 300, 35, '*', usuario != null ? usuario.Senha : null));
+            base.generics.Add(new GenericField("name", 20, 30, "Nome", 300, 35, ' ', usuario != null ? usuario.Nome : null));
+            base.generics.Add(new GenericField("email", 20, 90, "Email", 300, 35 , ' ', usuario != null ? usuario.Email : null));
+            base.generics.Add(new GenericField("senha", 20, 150, "Senha", 300, 35, '*', usuario != null ? usuario.Senha : null));
 
-            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 30, 70,260, this.ClickOnConfirmBttn);
-            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 30, 200, 260, this.ClickOnCancelBttn);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 40, 60,220, this.ClickOnConfirmBttn);
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 40, 180, 220, this.ClickOnCancelBttn);
            
             foreach (GenericField generics in base.generics)
             {
@@ -123,7 +123,7 @@ namespace Views
                 senha = SenhaController.GetSenha(id);
             }
 
-            this.ClientSize = new System.Drawing.Size(300, 760);
+            this.ClientSize = new System.Drawing.Size(300, 720);
             this.Text = function == Function.Create
                 ? "Cadastro de senha"
                 : "Alteração de senha";
@@ -133,10 +133,7 @@ namespace Views
             base.generics.Add(new GenericField("user", 10, 160, "Usuário", 280, 15, ' ', senha != null ? senha.Usuario : null));
             base.generics.Add(new GenericField("pass", 10, 230, "Senha", 280, 15, '*', senha != null ? senha.SenhaEncrypt : null));
 
-            this.lblCategory = new Label();
-            this.lblCategory.Text = "Categoria";
-            this.lblCategory.Location = new Point(10, 300);
-            this.lblCategory.Size = new Size(280, 15);
+            lblCategory = new Generic.FieldOnLabel("Categoria", 280, 15, 10, 300);
 
             string[] categoria = {};
 			this.comboCategory = new ComboBox();
@@ -179,13 +176,13 @@ namespace Views
             this.checkBoxTags.SelectionMode = SelectionMode.One;
             this.checkBoxTags.CheckOnClick = true;            
 
-            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 45, 680, this.ClickOnConfirmBttn);
-            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 170, 680, this.ClickOnCancelBttn);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 665, this.ClickOnConfirmBttn);
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 165, 665, this.ClickOnCancelBttn);
 
-            foreach (GenericField field in base.generics)
+            foreach (GenericField generic in base.generics)
             {
-                this.Controls.Add(field.label);
-                this.Controls.Add(field.textBox);
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
             }
 
             if (senha != null) 
@@ -215,7 +212,7 @@ namespace Views
             {
             var category = comboCategory.SelectedItem.ToString();
             var startId = category.IndexOf("- ");
-            var categoryId = category.Substring(0, startId - 1);
+            var categoryId = Convert.ToInt32(category.Substring(0, startId - 1));
             }
             catch (Exception)
             {
@@ -233,11 +230,17 @@ namespace Views
                         genericSenhaEncrypt.textBox.Text,
                         txtProcedure.Text
                     );
-                    TagSenhaController.InserirSenhaTag(
-                        99,
-                        Convert.ToInt32(checkBoxTags.SelectedItems[0])
-                    );
-                    MessageBox.Show("Senha criada com sucesso");
+                    foreach (var item in checkBoxTags.CheckedItems)
+                    {
+                        var tag = item.ToString();
+                        var startId = tag.IndexOf("- ");
+                        var tagId = tag.Substring(0, startId - 1);
+                        TagSenhaController.InserirSenhaTag(
+                            senha.Id,
+                            Convert.ToInt32(tagId)
+                        );
+                    }
+                    MessageBox.Show("Success","Senha cadastrada com sucesso!", MessageBoxButtons.OK);
                     this.Close();
                 }
                 else if (option == Function.Update)
@@ -251,6 +254,16 @@ namespace Views
                         genericSenhaEncrypt.textBox.Text,
                         txtProcedure.Text
                     );
+                    foreach (var item in checkBoxTags.CheckedItems)
+                        {
+                            var tag = item.ToString();
+                            var startId = tag.IndexOf("- ");
+                            var tagId = tag.Substring(0, startId - 1);
+                            TagSenhaController.InserirSenhaTag(
+                                senha.Id,
+                                Convert.ToInt32(tagId)
+                        );
+                    }
                     MessageBox.Show("Success","Senha alterada com sucesso!", MessageBoxButtons.OK);
                     this.Close();
                 }
@@ -268,6 +281,7 @@ namespace Views
     }
 
     // Funções da Tag
+
     public class TagForm : GenericBase
     {
         public static Function option;
@@ -289,16 +303,16 @@ namespace Views
                 tag = TagController.GetTag(id);
             }
 
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(300, 200);
             this.Text = function == Function.Create
                 ? "Cadastro de tag"
                 : "Alteração de tag";
 
-            base.generics.Add(new GenericField("description", 10, 90, "Descrição", 280, 15, ' ', tag != null ? tag.Descricao : null));
+            base.generics.Add(new GenericField("description", 10, 30, "Descrição", 280, 5, ' ', tag != null ? tag.Descricao : null));
         
 
-            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 200, this.ClickOnConfirmBttn);
-            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 170, 200, this.ClickOnCancelBttn);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 120, this.ClickOnConfirmBttn);
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 170, 120, this.ClickOnCancelBttn);
 
             foreach (GenericField generic in base.generics)
             {
@@ -336,6 +350,7 @@ namespace Views
             {
                 ErrorMessage.Show();
             }
+            this.Close();
         }
 
         private void ClickOnCancelBttn(object sender, EventArgs e)
@@ -365,7 +380,7 @@ namespace Views
                 categoria = CategoriaController.GetCategoria(id);
             }
 
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(300, 240);
             this.Text = function == Function.Create
                 ? "Cadastro de categoria"
                 : "Alteração de categoria";
@@ -373,8 +388,8 @@ namespace Views
             base.generics.Add(new GenericField("name", 10, 20, "Nome", 280, 15, ' ', categoria != null ? categoria.Nome : null));
             base.generics.Add(new GenericField("description", 10, 90, "Descrição", 280, 15, ' ', categoria != null ? categoria.Descricao : null));
 
-            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 200, this.ClickOnConfirmBttn);
-            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 170, 200, this.ClickOnCancelBttn);
+            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 170, this.ClickOnConfirmBttn);
+            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 170, 170, this.ClickOnCancelBttn);
 
             foreach (GenericField generic in base.generics)
             {

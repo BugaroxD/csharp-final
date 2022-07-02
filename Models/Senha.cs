@@ -43,7 +43,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"\n ---------------------------------------"
+            return $"\n *"
                 + $"\n ID: {this.Id}"
                 + $"\n Nome: {this.Nome}"
                 + $"\n Categoria: {this.Categoria.Nome}"

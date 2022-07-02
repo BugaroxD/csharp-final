@@ -30,7 +30,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"\n ---------------------------------------"
+            return $"\n *"
                 + $"\n ID: {this.Id}"
                 + $"\n SenhaId: {this.SenhaId}"
                 + $"\n TagId: {this.TagId}";

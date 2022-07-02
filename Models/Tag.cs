@@ -26,7 +26,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"\n ---------------------------------------"
+            return $"\n *"
                 + $"\n ID: {this.Id}"
                 + $"\n Descricao: {this.Descricao}";
         }
@@ -66,8 +66,15 @@ namespace Models
 
         public static IEnumerable<Tag> GetTags()
         {
-            Context db = new Context();
-            return (from Tag in db.Tags select Tag);
+            try
+            {
+                Context db = new Context();
+                return (from Tag in db.Tags select Tag);
+            }
+            catch
+            {
+                throw new System.Exception("Sem contato com o banco de dados!!");
+            }
         }
 
         public static Tag GetTag(int Id)

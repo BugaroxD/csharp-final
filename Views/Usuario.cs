@@ -18,13 +18,13 @@ namespace Views
         
         public UsuarioView()
         {
-            this.ClientSize = new System.Drawing.Size(310, 450);
+            this.ClientSize = new System.Drawing.Size(305, 450);
             this.Text = "Usuários";
 
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 40, 370, this.ClickOnInsertBttn);
-            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 170, 370, this.ClickOnUpdateBttn);
-            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  170, 410, this.ClickOnReturnBttn);
-            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 40, 410, this.ClickOnDeleteBttn);
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 35, 370, this.ClickOnInsertBttn);
+            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 165, 370, this.ClickOnUpdateBttn);
+            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  165, 410, this.ClickOnReturnBttn);
+            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 35, 410, this.ClickOnDeleteBttn);
            
         // Select dos registros
 
@@ -49,8 +49,8 @@ namespace Views
         {
             try
             {
-                ListViewItem selectedItem = listView.SelectedItems[0];
-                new UserForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                
+                new UserForm(Function.Update).Show();
                 this.Dispose();
             }
             catch (Exception)
@@ -63,15 +63,14 @@ namespace Views
         {
             try
             {
-                ListViewItem selectedItem = listView.SelectedItems[0];
-                int userId = Convert.ToInt32(selectedItem.Text);
+                int userId = Convert.ToInt32(listView.CheckedItems[0].Text);
                 DialogResult result = MessageBox.Show($"Para efetuar a exclusão do usuário {userId} clicar em SIM! Se for engano clique em NÃO", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if(result == DialogResult.Yes)
                 {
                     UsuarioController.ExcluirUsuario(userId);
                 }
                 this.Close();
-            } 
+            }
             catch (Exception)
             {
                 ErrorMessage.Show("Deu ruim!");

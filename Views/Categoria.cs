@@ -18,13 +18,13 @@ namespace Views
 
         public CategoriaView() 
         {
-            this.ClientSize = new System.Drawing.Size(300, 450);
+            this.ClientSize = new System.Drawing.Size(305, 450);
             this.Text = "Categorias";
 
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 40, 370, this.ClickOnInsertBttn);
-            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 170, 370, this.ClickOnUpdateBttn);
-            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  170, 410, this.ClickOnReturnBttn);
-            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 40, 410, this.ClickOnDeleteBttn);
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 35, 370, this.ClickOnInsertBttn);
+            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 165, 370, this.ClickOnUpdateBttn);
+            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  165, 410, this.ClickOnReturnBttn);
+            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 35, 410, this.ClickOnDeleteBttn);
 			
         // Select dos registros
 
@@ -50,8 +50,7 @@ namespace Views
         {
             try
             {
-                ListViewItem selectedItem = listView.SelectedItems[0];
-                new CategoryForm(Function.Update, Convert.ToInt32(selectedItem.Text)).Show();
+                new CategoryForm(Function.Update).Show();
                 this.Dispose();
             }
             catch (Exception)
@@ -64,8 +63,7 @@ namespace Views
         {
             try
             {
-                ListViewItem selectedItem = listView.SelectedItems[0];
-                int categoryId = Convert.ToInt32(selectedItem.Text);
+                int categoryId = Convert.ToInt32(listView.CheckedItems[0].Text);
                 DialogResult result = MessageBox.Show($"Para efetuar a exclusão da categoria {categoryId} clicar em SIM! Se for engano clique em NÃO!", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if(result == DialogResult.Yes)
                 {

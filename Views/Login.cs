@@ -16,15 +16,15 @@ namespace Views
         
         public LoginForm(): base()
         {
-            this.ClientSize = new System.Drawing.Size(280, 280);
+            this.ClientSize = new System.Drawing.Size(270, 250);
             this.Text = "Login";
 
-            base.generics.Add(new GenericField("user", 20, 20, "Usuário"));
-            base.generics.Add(new GenericField("password", 20, 90, "Senha", 240, 15, '*'));
+            base.generics.Add(new GenericField("user", 15, 20, "Usuário"));
+            base.generics.Add(new GenericField("password", 15, 90, "Senha", 240, 15, '*'));
             
-            bttnLogin = new Generic.FieldOnButton("Conectar", 80, 30, 40, 160, this.ClickOnLoginBttn);
-            bttnRegister = new Generic.FieldOnButton("Novo usuário!", 60, 70, 170, 160, this.ClickOnRegisterBttn);
-            bttnExit = new Generic.FieldOnButton("Sair", 80, 30, 40, 200, this.ClickOnExitBttn);
+            bttnLogin = new Generic.FieldOnButton("Conectar", 75, 30, 45, 160, this.ClickOnLoginBttn);
+            bttnRegister = new Generic.FieldOnButton("Novo usuário!", 60, 75, 160, 160, this.ClickOnRegisterBttn);
+            bttnExit = new Generic.FieldOnButton("Sair", 75, 30, 45, 205, this.ClickOnExitBttn);
             
             foreach (GenericField generic in base.generics)
             {
